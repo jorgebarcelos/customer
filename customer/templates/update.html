@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block update %}
+    <br>
+    <h1 class="container" style="text-align: center;">Atualização de Clientes</h1>
+    <br>
+    <div class="container" style="text-align: center;">
+        <form action="{% url 'update' customer.id %}" method='post'>{% csrf_token %}
+            <input class="form-control" name="name" value="{{customer.name}}" type="text" placeholder="Nome" aria-label="default input example">
+            <br>
+            <input class="form-control" name="cnpj" value="{{customer.cnpj}}" type="text" placeholder="cnpj" aria-label="default input example">
+            <br>
+            <button type="submit" class="btn btn-outline-warning">Atualizar</button>
+        </form>
+    </div>
+{% endblock update %}    

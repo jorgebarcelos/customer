@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block home %}
+    <br>
+    <h1 class="container" style="text-align: center;">Cadastro de Clientes</h1>
+    <br>
+    <div class="container" style="text-align: center;">
+        <form action="{% url 'save' %}" method='post'>{% csrf_token %}
+            <input class="form-control" name="name" type="text" placeholder="Nome" aria-label="default input example">
+            <br>
+            <input class="form-control" name="cnpj" type="text" placeholder="cnpj" aria-label="default input example">
+            <br>
+            <button type="submit" class="btn btn-outline-primary">Salvar</button>
+        </form>
+    </div>
+    <br>
+    <div class="container">
+      <table class="table">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nome</th>
+          <th scope="col">CNPJ</th>
+          <th scope="col">Editar</th>
+          <th scope="col">Deletar</th>
+        </tr>
+
+        {% for customer in customers %}
+        <tr>
+            <td>{{customer.id}}</td>
+            <td>{{customer.name}}</td>
+            <td>{{customer.cnpj}}</td>
+            <td class="edit">
+              <!-- Button trigger modal edit Start-->
+              <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#exampleModalEdit">
+                Editar
+              </button>
+
+              <!-- Modal edit Start-->
+              <div class="modal fade" id="exampleModalEdit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel"><h4 class="container" style="text-align: center;">Confirmar edição?</h4></h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Fechar</button>
+                      <a class="btn btn-outline-warning" href="{% url 'edit' customer.id %}">Editar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            <!-- Modal edit end -->
+            <td class="delete">
+              <!-- Button trigger modal delete Start -->
+              <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#exampleModalDelete">
+                Deletar
+              </button>
+
+              <!-- Modal delete Start -->
+              <div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel"><h4 class="container" style="text-align: center;">Confirmar exclusão?</h4></h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Fechar</button>
+                      <a class="btn btn-outline-danger" href="{% url 'delete' customer.id %}">Deletar</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </td>
+            </td>
+            <!-- Modal delete end -->
+        </tr>
+      {% endfor %}
+      </table>
+    </div>
+{% endblock home %}
